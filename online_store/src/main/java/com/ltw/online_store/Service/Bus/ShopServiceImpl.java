@@ -1,24 +1,25 @@
 package com.ltw.online_store.Service.Bus;
 
 import com.ltw.online_store.Dto.SanPhamDto;
+import com.ltw.online_store.Entity.NguoiDung;
 import com.ltw.online_store.Entity.SanPham;
-import com.ltw.online_store.Repository.NhanHieuRepository;
+import com.ltw.online_store.Entity.Shop;
 import com.ltw.online_store.Repository.SanPhamRepository;
+import com.ltw.online_store.Repository.ShopRepository;
 import com.ltw.online_store.Service.DanhMucService;
 import com.ltw.online_store.Service.NhanHieuService;
-import com.ltw.online_store.Service.SanPhamService;
+import com.ltw.online_store.Service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletContext;
 import java.io.File;
 import java.util.List;
 
-@Service
-public class SanPhamServiceImpl implements SanPhamService {
+public class ShopServiceImpl implements ShopService {
     @Autowired
     private SanPhamRepository sanPhamRepository;
-
+    @Autowired
+    private ShopRepository shopRepository;
     @Autowired
     private NhanHieuService nhanHieuService;
 
@@ -27,21 +28,14 @@ public class SanPhamServiceImpl implements SanPhamService {
 
     @Autowired
     private ServletContext app;
-
     @Override
-    public List<SanPham> tatCaSanPham() {
-        return sanPhamRepository.findAll();
+    public List<Shop> tatCaShop() {
+        return shopRepository.findAll();
     }
 
     @Override
     public void luuSanPham(SanPham sanPham) {
         sanPhamRepository.save(sanPham);
-    }
-
-    @Override
-    public boolean sanPhamTonTai(String ten) {
-        if(sanPhamRepository.findSanPhamByTen(ten) != null) return true;
-        return false;
     }
 
     @Override
@@ -53,6 +47,7 @@ public class SanPhamServiceImpl implements SanPhamService {
         System.out.println("nhan hieu: "+nhanHieuService.timTheoId(sanPhamDto.getNhanHieu()));
         sanPham.setNhanHieu(nhanHieuService.timTheoId(sanPhamDto.getNhanHieu()));
         sanPham.setDanhMuc(danhMucService.timTheoId(sanPhamDto.getDanhMuc()));
+
         sanPham.setMauSac(sanPhamDto.getMauSac());
         sanPham.setGioiTinh(sanPhamDto.getGioiTinh());
         sanPham.setMoTa(sanPhamDto.getMoTa());

@@ -58,7 +58,6 @@ public class SanPhamApi {
                 long id = sanPhamService.luuSanPham(sanPhamDto);
                 String filePath = path + "/WEB-INF/template/img/"+id + sanPhamDto.getAnh().getOriginalFilename();
                 sanPhamDto.getAnh().transferTo(Path.of(filePath));
-
                 System.out.println("filePath: " + filePath);
                 doiTuongTraVe.setThongBao("Lưu thành công");
             } catch (Exception e) {
